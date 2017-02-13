@@ -23,3 +23,40 @@ function reliableMultiply(a, b) {
     }
   }
 }
+
+var box = {
+  locked: true,
+  unlock: function() { this.locked = false; },
+  lock: function() { this.locked = true; },
+  _content: [],
+  get content() {
+    if (this.locked) throw new Error("Заперто!");
+    return this._content;
+  }
+};
+
+function withBoxUnlocked(body) {
+  try {
+    box.unlock();
+    body();
+    box.lock();
+  } catch(e) {
+    box.lock();
+    console.log(e.toString());
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
